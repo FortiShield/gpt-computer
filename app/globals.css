@@ -2,55 +2,112 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Archivo:wght@400;500;600;700&display=swap');
+
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 20%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 30%;
-    --muted-foreground: 0 0% 70%;
-    --accent: 263 100% 60%;
-    --accent-foreground: 0 0% 100%;
-    --radius: 0.5rem;
-    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
+    --card-bg: 220 20% 12%;
+    --card-border: 220 15% 20%;
+    --primary: 180 100% 50%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 220 25% 18%;
+    --secondary-foreground: 180 100% 50%;
+    --muted: 220 15% 30%;
+    --muted-foreground: 220 10% 60%;
+    --accent: 180 100% 50%;
+    --accent-foreground: 0 0% 5%;
+    --danger: 0 84% 60%;
+    --success: 120 70% 45%;
+    --warning: 45 93% 50%;
+    --radius: 0.375rem;
+    --font-sans: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  html {
+    @apply scroll-smooth;
   }
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 
   * {
-    @apply border-secondary;
+    @apply border-[hsl(var(--card-border))];
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-[hsl(var(--muted))] rounded;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-[hsl(var(--accent))];
   }
 }
 
 @layer components {
   .button-primary {
-    @apply px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity;
+    @apply px-4 py-2 rounded bg-[hsl(var(--accent))] text-[hsl(var(--accent-foreground))] font-medium hover:brightness-110 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .button-secondary {
-    @apply px-6 py-3 rounded-full bg-secondary text-secondary-foreground font-medium border border-muted hover:bg-opacity-80 transition-all;
+    @apply px-4 py-2 rounded bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] font-medium border border-[hsl(var(--card-border))] hover:bg-opacity-80 transition-all;
+  }
+
+  .button-danger {
+    @apply px-4 py-2 rounded bg-[hsl(var(--danger))] text-white font-medium hover:brightness-110 transition-all;
   }
 
   .heading-1 {
-    @apply text-5xl md:text-6xl font-bold text-balance;
+    @apply text-4xl md:text-5xl font-bold text-balance text-foreground;
   }
 
   .heading-2 {
-    @apply text-3xl md:text-4xl font-bold text-balance;
+    @apply text-3xl md:text-4xl font-bold text-balance text-foreground;
   }
 
   .heading-3 {
-    @apply text-2xl md:text-3xl font-semibold text-balance;
+    @apply text-xl md:text-2xl font-semibold text-balance text-foreground;
   }
 
-  .text-lg-muted {
-    @apply text-lg text-muted-foreground;
+  .text-muted {
+    @apply text-[hsl(var(--muted-foreground))];
+  }
+
+  .card {
+    @apply bg-[hsl(var(--card-bg))] border border-[hsl(var(--card-border))] rounded;
+  }
+
+  .terminal {
+    @apply font-mono text-sm bg-black/50 text-[hsl(var(--accent))];
+  }
+
+  .status-indicator {
+    @apply inline-block h-2 w-2 rounded-full;
+  }
+
+  .status-healthy {
+    @apply bg-[hsl(var(--success))];
+  }
+
+  .status-degraded {
+    @apply bg-[hsl(var(--warning))];
+  }
+
+  .status-offline {
+    @apply bg-[hsl(var(--danger))];
   }
 }

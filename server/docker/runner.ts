@@ -108,7 +108,7 @@ export class DockerSandboxRunner extends EventEmitter {
   private async *streamExecution(
     exec: any
   ): AsyncGenerator<ExecutionStreamEvent> {
-    return new Promise((resolve, reject) => {
+    const events: ExecutionStreamEvent[] = await new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error(`Execution timeout after ${this.request.timeoutSeconds}s`))
       }, this.request.timeoutSeconds * 1000)
@@ -175,19 +175,20 @@ export class DockerSandboxRunner extends EventEmitter {
           reject(err)
         })
       })
-    }).then((events: ExecutionStreamEvent[]) => {
-      // Yield all accumulated events
-      for (const event of events) {
-        yield event
-      }
     })
+
+    // Yield all accumulated events
+    for (const event of events) {
+      yield event
+    }
   }
 
   /**
    * Build Docker container configuration based on execution request
    */
   private buildContainerConfig(baseImage: string) {
-    const cpuQuota = Math.max(1, Math.floor(this.request.cpuLimit * 100000))
+    const cpuLimit = this.request.cpuLimit || 1
+    const cpuQuota = Math.max(1, Math.floor(cpuLimit * 100000))
 
     return {
       Image: baseImage,

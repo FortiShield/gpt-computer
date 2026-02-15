@@ -205,7 +205,7 @@ export class DockerSandboxRunner extends EventEmitter {
         // Security
         ReadonlyRootfs: !this.request.allowFilesystemWrite,
         CapDrop: ['ALL'],
-        CapAdd: ['NET_BIND_SERVICE'],
+        CapAdd: this.request.allowNetwork ? ['NET_BIND_SERVICE'] : [],
         SecurityOpt: ['no-new-privileges:true'],
 
         // Isolation

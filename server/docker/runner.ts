@@ -291,7 +291,7 @@ export async function executeSandboxCommand(
 
   for await (const event of runner.execute()) {
     if (event.type === 'exit') {
-      exitCode = event.exitCode || 1
+      exitCode = event.exitCode ?? 1
     }
   }
 

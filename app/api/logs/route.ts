@@ -39,9 +39,9 @@ export async function POST(request: NextRequest) {
     const logId = Math.random().toString(36).substr(2, 9)
 
     const newLog: AuditLog = {
+      ...body,
       id: logId,
       timestamp: new Date().toISOString(),
-      ...body,
     }
 
     logs.push(newLog)

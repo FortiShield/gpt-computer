@@ -23,10 +23,11 @@ export function getDockerClient(): Docker {
     } else if (dockerHost.startsWith('tcp://')) {
       // TCP connection to remote Docker daemon
       const url = new URL(dockerHost)
+      const proto = url.protocol === 'tcp:' ? 'http' : url.protocol.replace(':', '')
       dockerInstance = new Docker({
         host: url.hostname,
         port: parseInt(url.port || dockerPort.toString()),
-        protocol: url.protocol.replace(':', '') as 'http' | 'https',
+        protocol: proto as 'http' | 'https',
       })
     } else {
       // Default to Unix socket

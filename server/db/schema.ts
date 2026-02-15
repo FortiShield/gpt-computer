@@ -44,7 +44,9 @@ export const executions = pgTable(
   'executions',
   {
     id: varchar('id', { length: 36 }).primaryKey(),
-    sessionId: varchar('session_id', { length: 36 }).notNull(),
+    sessionId: varchar('session_id', { length: 36 })
+      .notNull()
+      .references(() => sessions.id, { onDelete: 'cascade' }),
     command: text('command').notNull(),
     runtime: varchar('runtime', { length: 50 }).notNull(),
     status: varchar('status', {
@@ -58,7 +60,7 @@ export const executions = pgTable(
     cpuUsage: numeric('cpu_usage', { precision: 5, scale: 2 }),
     memoryUsage: numeric('memory_usage', { precision: 10, scale: 2 }), // in bytes
     containerId: varchar('container_id', { length: 255 }),
-    startedAt: timestamp('started_at').notNull(),
+    startedAt: timestamp('started_at'),
     completedAt: timestamp('completed_at'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },

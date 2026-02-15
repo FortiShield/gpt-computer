@@ -96,7 +96,7 @@ export function ExecutionPanel({ onExecute, isExecuting = false }: ExecutionPane
             min="1"
             max="300"
             value={limits.timeout}
-            onChange={(e) => setLimits({ ...limits, timeout: parseInt(e.target.value) })}
+            onChange={(e) => setLimits({ ...limits, timeout: parseInt(e.target.value) || limits.timeout })}
             disabled={isExecuting}
             className="w-full px-3 py-2 bg-[hsl(var(--secondary))] border border-[hsl(var(--card-border))] rounded text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(var(--accent))]"
           />

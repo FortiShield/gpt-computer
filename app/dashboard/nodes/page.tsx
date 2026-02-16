@@ -169,7 +169,7 @@ export default function NodesPage() {
                     </div>
                     <div>
                       <p className="text-xs text-muted uppercase tracking-wider mb-1">Last Seen</p>
-                      <p className="text-sm text-foreground">
+                      <p className="text-sm text-foreground" suppressHydrationWarning>
                         {new Date(selectedNode.lastSeen).toLocaleTimeString()}
                       </p>
                     </div>
